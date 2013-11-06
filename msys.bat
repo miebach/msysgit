@@ -49,14 +49,14 @@ rem We here assume old behavior, to make sure that older platforms can still use
 rem this batch file to start their MSys environment.
 set BIN=""
 if EXIST bin\nul set BIN=bin\
-if EXIST %BIN%bash.exe goto startbash
 if EXIST %BIN%rxvt.exe goto startrxvt
+if EXIST %BIN%bash.exe goto startbash
 
 rem If we're not on win9x type OSs, lets try a little better at finding bash/rxvt
 if "win%OS_VERSION%"=="win9x" goto failed
 set BIN="%~dp0bin\"
-if EXIST %BIN%bash.exe goto startbash
 if EXIST %BIN%rxvt.exe goto startrxvt
+if EXIST %BIN%bash.exe goto startbash
 
 :failed
 echo Cannot find the rxvt.exe or bash.exe binary -- aborting.
