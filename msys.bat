@@ -45,21 +45,14 @@ if "%1" == "MSYS" set MSYSTEM=MSYS
 
 if NOT "x%DISPLAY%" == "x" set DISPLAY=
 
-rem We here assume old behavior, to make sure that older platforms can still use
-rem this batch file to start their MSys environment.
-set BIN=""
-if EXIST bin\nul set BIN=bin\
-if EXIST %BIN%rxvt.exe goto startrxvt
-if EXIST %BIN%bash.exe goto startbash
-
-rem If we're not on win9x type OSs, lets try a little better at finding bash/rxvt
-if "win%OS_VERSION%"=="win9x" goto failed
 set BIN="%~dp0bin\"
+rem ember to set CONEMU to the complete path to ConEmu.exe:
+if EXIST %CONEMU% goto startconemu
 if EXIST %BIN%rxvt.exe goto startrxvt
 if EXIST %BIN%bash.exe goto startbash
 
 :failed
-echo Cannot find the rxvt.exe or bash.exe binary -- aborting.
+echo Cannot find rxvt.exe, bash.exe or ConEmu.exe binary -- aborting.
 pause
 rem exit 1
 rem we skip using exit 1 here, since it will close the console you were working on
@@ -67,6 +60,10 @@ rem which probably isn't what you wanted. If the bat file was run from a shortcu
 rem the window will still close, like you would expect it to. Sorry, you cant test
 rem for exit values anymore, but hey, you can just un-rem the line above then! :-)
 goto EOF
+
+:startconemu
+start %CONEMU% /cmd %~dp0\bin\bash.exe --login -i -cur_console:n
+exit
 
 rem If you don't want to use rxvt then rename the file rxvt.exe to something
 rem else.  Then bash.exe will be used instead.
