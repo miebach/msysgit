@@ -46,6 +46,8 @@ if "%1" == "MSYS" set MSYSTEM=MSYS
 if NOT "x%DISPLAY%" == "x" set DISPLAY=
 
 set BIN="%~dp0bin\"
+rem ember to set CONSOLE2 and CONSOLE2XML to the complete path to console.exe and to its config xml file:
+if EXIST %CONSOLE2% goto startconsole2
 rem ember to set CONEMU to the complete path to ConEmu.exe:
 if EXIST %CONEMU% goto startconemu
 if EXIST %BIN%rxvt.exe goto startrxvt
@@ -60,6 +62,11 @@ rem which probably isn't what you wanted. If the bat file was run from a shortcu
 rem the window will still close, like you would expect it to. Sorry, you cant test
 rem for exit values anymore, but hey, you can just un-rem the line above then! :-)
 goto EOF
+
+:startconsole2
+rem -d without parameter uses the current directory:
+start %CONSOLE2% -c %CONSOLE2XML% -d
+exit
 
 :startconemu
 start %CONEMU% /cmd %~dp0\bin\bash.exe --login -i -cur_console:n
