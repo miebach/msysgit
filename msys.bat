@@ -66,6 +66,8 @@ goto EOF
 :startconsole2
 rem -d without parameter uses the current directory:
 start %CONSOLE2% -c %CONSOLE2XML% -d
+rem In CONSOLE2XML set the path to git bash and leave init_dir empty:
+rem <console ... shell="c:\program files\git\bin\sh.exe --login -i" init_dir="">
 exit
 
 :startconemu
